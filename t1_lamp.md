@@ -71,7 +71,7 @@ apt upgrade
 * **PHP**, como lenguaje de programación.
 
 
-## Instalacion de Apache Web Server
+### Instalacion de Apache Web Server
 
 * Instalamos **apache2**
 
