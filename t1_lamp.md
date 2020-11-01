@@ -65,21 +65,21 @@ apt upgrade
 
 **LAMP** es el acŕonimo usado para describir un sistema de infraestructura de internet que usa las siguientes herramientas:
 
-* Linux, como sistema operativo. En este caso usaremos la distribución Debian Buster.
-* Apache, que va ser nuestro servidor web.
-* MySQL/MariaDB, que va ser nuestro gestor de base de datos.
-* PHP, como lenguaje de programación.
+* **Linux**, como sistema operativo. En este caso usaremos la distribución Debian Buster.
+* **Apache**, que va ser nuestro servidor web.
+* **MySQL/MariaDB**, que va ser nuestro gestor de base de datos.
+* **PHP**, como lenguaje de programación.
 
 
 ## Instalacion de Apache Web Server
 
-* Instalamos apache2
+* Instalamos **apache2**
 
 ```sh
 apt install apache2 apache2-utils
 ```
 
-* Vemos la version de apache
+* Vemos la **version** de apache
 
 ```sh
 root@debian-cms:/home/vagrant# apache2 -v
@@ -116,12 +116,12 @@ lines 1-18/18 (END)
 
 ### Instalación de MYSQL/MariaDB
 
-* Instalamos nuestro gestor de base de datos de la siguiente forma
+* Instalamos nuestro **gestor de base de datos** de la siguiente forma
 
 ```sh
 apt install mariadb-client mariadb-server
 ```
-* Ahora vamos a crear una base de datos. Para ello entramos como root a mysql. 
+* Ahora entramos como root a mysql. 
 
 ```sh
 root@debian-cms:/home/vagrant# mysql -u root -p
@@ -147,7 +147,7 @@ Query OK, 1 row affected (0.002 sec)
 
 ```
 
-* Creamos un usuario y le damos los privilegios para usar esa base de datos
+* Creamos un **usuario** y le damos los **privilegios** para usar esa base de datos
 
 ```sh
 
@@ -161,13 +161,13 @@ Query OK, 0 rows affected (0.002 sec)
 
 ### Instalación de PHP 
 
-* Instalamos PHP, el módulo para conectarnos a la base de datos y el módulo que nos permite conectarnos al sevidor.
+* Instalamos **PHP**, el módulo para conectarnos a la base de datos y el módulo que nos permite conectarnos al sevidor.
 
 ```sh
 apt install php php-mysql libapache2-mod-php 
 ```
 
-* Vemos la version de php
+* Vemos la **version** de php
 
 ```sh
 root@debian-cms:/home/vagrant# php -v
@@ -178,5 +178,5 @@ Zend Engine v3.3.19, Copyright (c) 1998-2018 Zend Technologies
 
 ```
 
-Con esto ya tendríamos LAMP operativo en nuestro sistema.
+Con esto ya tendríamos **LAMP** operativo en nuestro sistema.
 
