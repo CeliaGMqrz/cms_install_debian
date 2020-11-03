@@ -224,4 +224,4 @@ www.celia-drupal.org/drupal
 
 * Comprobamos que se ha instalado correctamente
 
-![drupal7.png]()https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal7.png
+![drupal7.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal7.png)
