@@ -148,7 +148,7 @@ nano /etc/apache2/conf-available/drupal.conf
 </Directory>
 ```
 
-* Activamos la configuración
+* Activamos la configuración:
 
 ```sh
 a2enconf drupal
