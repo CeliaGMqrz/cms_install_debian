@@ -199,29 +199,29 @@ www.celia-drupal.org/drupal
 
 * Primero elegimos el idioma
 
-![drupal1.png]()
+![drupal1.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal1.png)
 
 * Pasamos a la selección de perfil de instalación, elegiremos estándar
 
-![drupal2.png]()
+![drupal2.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal2.png)
 
 * Vemos que cumplimos todos los requisitos
 
 * Ahora nos muestra la configuración de la base de datos, debemos introducir el nombre de la base de datos que hemos creado anteriormente, el nombre del usuario que la usa y la contraseña para entrar a la base de datos. Guardamos y continuamos
 
-![drupal3.png]()
+![drupal3.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal3.png)
 
 * Después se empezará a instalar
 
-![drupal4.png]()
+![drupal4.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal4.png)
 
 * Cuando finaliza la instalación hay que configurar la identidad del sitio y crear un usuario que será el administrador
 
-![drupal5.png]()
+![drupal5.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal5.png)
 
 
-![drupal6.png]()
+![drupal6.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal6.png)
 
 * Comprobamos que se ha instalado correctamente
 
-![drupal7.png]()
+![drupal7.png]()https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal7.png
