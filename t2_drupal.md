@@ -60,6 +60,9 @@ To activate the new configuration, you need to run:
 chown -R www-data:www-data /var/www/celia-drupal
 ```
 
+
+
+
 * Reiniciamos el servicio
 
 ```sh
@@ -125,6 +128,21 @@ apt install php-apcu php-mbstring php-xml
 systemctl reload apache2
 ```
 
+* Necesitamos habilitar url limpias, para ello editamos el fichero /etc/apache2/apache2.conf
+
+```sh
+#HABILITAR URL LIMPIAS
+
+<Directory /var/www/celia-drupal>
+         RewriteEngine On
+         RewriteBase /
+         RewriteCond %{REQUEST_FILENAME} !-f
+         RewriteCond %{REQUEST_FILENAME} !-d
+         RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+</Directory>
+
+```
+
 * Debemos activar el módulo **Rewrite** y algunos más que necesita Drupal de apache
 
 ```sh
@@ -159,3 +177,51 @@ a2enconf drupal
 ```sh
 systemctl restart apache2
 ```
+
+* Editamos el fichero /etc/hosts de nuestra máquina física
+
+```sh
+127.0.0.1       localhost
+127.0.1.1       debian
+192.168.100.162 www.departamentos.iesgn.org
+192.168.100.160 www.celia-drupal.org
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+
+```
+
+* Ahora vamos a nuestro navegador y entramos a la siguiente dirección para instalar drupal:
+
+www.celia-drupal.org/drupal
+
+* Primero elegimos el idioma
+
+![drupal1.png]()
+
+* Pasamos a la selección de perfil de instalación, elegiremos estándar
+
+![drupal2.png]()
+
+* Vemos que cumplimos todos los requisitos
+
+* Ahora nos muestra la configuración de la base de datos, debemos introducir el nombre de la base de datos que hemos creado anteriormente, el nombre del usuario que la usa y la contraseña para entrar a la base de datos. Guardamos y continuamos
+
+![drupal3.png]()
+
+* Después se empezará a instalar
+
+![drupal4.png]()
+
+* Cuando finaliza la instalación hay que configurar la identidad del sitio y crear un usuario que será el administrador
+
+![drupal5.png]()
+
+
+![drupal6.png]()
+
+* Comprobamos que se ha instalado correctamente
+
+![drupal7.png]()

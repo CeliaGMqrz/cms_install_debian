@@ -164,7 +164,7 @@ Query OK, 0 rows affected (0.002 sec)
 * Instalamos **PHP**, el módulo para conectarnos a la base de datos y el módulo que nos permite conectarnos al sevidor.
 
 ```sh
-apt install php php-mysql libapache2-mod-php 
+apt install php php-mysql libapache2-mod-php php-gd
 ```
 
 * Vemos la **version** de php
