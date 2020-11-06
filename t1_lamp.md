@@ -180,3 +180,10 @@ Zend Engine v3.3.19, Copyright (c) 1998-2018 Zend Technologies
 
 Con esto ya tendríamos **LAMP** operativo en nuestro sistema.
 
+## FUNCIONAMIENTO
+
+* Creamos un index.html sencillo dentro de nuestro directorio /var/www/html
+
+* Vemos que funciona nuestro entorno LAMP
+
+![index.png]()
