@@ -331,6 +331,8 @@ Habilitamos los módulos instalados y le damos a 'instalar'
 
 ![habilitar.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/habilitar.png)
 
+Ya tendríamos instalado nuestro nuevo módulo
+
 ![correcto.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/correcto.png)
 
 
