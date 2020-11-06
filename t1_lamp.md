@@ -186,7 +186,75 @@ Con esto ya tendríamos **LAMP** operativo en nuestro sistema.
 
 * Vemos que funciona nuestro entorno LAMP
 
+Mariadb en funcionamiento:
+
+
+```sh
+root@debian-cms:/home/vagrant# systemctl status mariadb
+● mariadb.service - MariaDB 10.3.25 database server
+   Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-11-06 12:03:53 GMT; 6h ago
+     Docs: man:mysqld(8)
+           https://mariadb.com/kb/en/library/systemd/
+  Process: 414 ExecStartPre=/usr/bin/install -m 755 -o mysql -g root -d /var/run/mysqld (code=exited, sta
+  Process: 425 ExecStartPre=/bin/sh -c systemctl unset-environment _WSREP_START_POSITION (code=exited, st
+  Process: 431 ExecStartPre=/bin/sh -c [ ! -e /usr/bin/galera_recovery ] && VAR= ||   VAR=`cd /usr/bin/..
+  Process: 515 ExecStartPost=/bin/sh -c systemctl unset-environment _WSREP_START_POSITION (code=exited, s
+  Process: 517 ExecStartPost=/etc/mysql/debian-start (code=exited, status=0/SUCCESS)
+ Main PID: 479 (mysqld)
+   Status: "Taking your SQL requests now..."
+    Tasks: 30 (limit: 544)
+   Memory: 149.6M
+   CGroup: /system.slice/mariadb.service
+           └─479 /usr/sbin/mysqld
+
+Nov 06 12:03:52 debian-cms systemd[1]: Starting MariaDB 10.3.25 database server...
+Nov 06 12:03:52 debian-cms mysqld[479]: 2020-11-06 12:03:52 0 [Note] /usr/sbin/mysqld (mysqld 10.3.25-Mar
+Nov 06 12:03:52 debian-cms mysqld[479]: 2020-11-06 12:03:52 0 [Warning] Could not increase number of max_
+Nov 06 12:03:53 debian-cms systemd[1]: Started MariaDB 10.3.25 database server.
+Nov 06 12:03:53 debian-cms /etc/mysql/debian-start[531]: Checking for insecure root accounts.
+Nov 06 12:03:53 debian-cms /etc/mysql/debian-start[535]: Triggering myisam-recover for all MyISAM tables 
+lines 1-23/23 (END)
+
+```
+Apache en funcionamiento:
+
+```sh
+root@debian-cms:/home/vagrant# systemctl status apache2
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-11-06 12:03:52 GMT; 6h ago
+     Docs: https://httpd.apache.org/docs/2.4/
+  Process: 416 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+ Main PID: 455 (apache2)
+    Tasks: 9 (limit: 544)
+   Memory: 34.6M
+   CGroup: /system.slice/apache2.service
+           ├─455 /usr/sbin/apache2 -k start
+           ├─480 /usr/sbin/apache2 -k start
+           ├─481 /usr/sbin/apache2 -k start
+           ├─482 /usr/sbin/apache2 -k start
+           ├─483 /usr/sbin/apache2 -k start
+           ├─484 /usr/sbin/apache2 -k start
+           ├─588 /usr/sbin/apache2 -k start
+           ├─589 /usr/sbin/apache2 -k start
+           └─590 /usr/sbin/apache2 -k start
+
+Nov 06 12:03:52 debian-cms systemd[1]: Starting The Apache HTTP Server...
+Nov 06 12:03:52 debian-cms apachectl[416]: AH00558: apache2: Could not reliably determine the server's fu
+Nov 06 12:03:52 debian-cms systemd[1]: Started The Apache HTTP Server.
+lines 1-22/22 (END)
+
+```
+
 ![index.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/index.png)
+
+php en funcionamiento:
+
+![testphp.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/testphp.png)
+
+
+
 
 
 -> [Instalación de drupal](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/t2_drupal.md)
