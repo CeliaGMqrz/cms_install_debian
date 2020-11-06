@@ -187,3 +187,6 @@ Con esto ya tendríamos **LAMP** operativo en nuestro sistema.
 * Vemos que funciona nuestro entorno LAMP
 
 ![index.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/index.png)
+
+
+-> [Instalación de drupal](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/t2_drupal.md)
