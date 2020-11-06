@@ -132,23 +132,19 @@ systemctl reload apache2
 
 ```sh
 #HABILITAR URL LIMPIAS
-
 <Directory /var/www/celia-drupal>
-         RewriteEngine On
-         RewriteBase /
-         RewriteCond %{REQUEST_FILENAME} !-f
-         RewriteCond %{REQUEST_FILENAME} !-d
-         RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+  RewriteEngine on
+  AllowOverride All
+  Options FollowSymlinks
 </Directory>
+
 
 ```
 
 * Debemos activar el módulo **Rewrite** y algunos más que necesita Drupal de apache
 
 ```sh
-root@debian-cms:~# a2enmod expires headers rewrite
-Enabling module expires.
-Enabling module headers.
+root@debian-cms:~# a2enmod rewrite
 Enabling module rewrite.
 To activate the new configuration, you need to run:
   systemctl restart apache2
@@ -161,9 +157,10 @@ nano /etc/apache2/conf-available/drupal.conf
 ```
 
 ```sh
-<Directory /var/www/html/drupal>
+<Directory /var/www/html/celia-drupal/drupal>
         AllowOverride all
 </Directory>
+
 ```
 
 * Activamos la configuración:
@@ -227,4 +224,113 @@ www.celia-drupal.org/drupal
 ![drupal7.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal7.png)
 
 ### Realiza una configuración mínima de la aplicación (Cambia la plantilla, crea algún contenido, …)
+
+#### Cambiar tema
+
+Vamos a cambiar el tema para ello vamos a la página oficial de drupal y descargamos el tema que queramos, en mi caso he escogido el siguiente:
+
+[clean blog](https://www.drupal.org/project/clean_blog)
+
+Necesita un 'tema' base que tambien descargamos:
+
+[bootstrap](https://www.drupal.org/project/bootstrap)
+
+Vamos a pasar los temas comprimidos a nuestro servidor por scp. Previamente hemos incluido nuestra clave pública en el servidor para poder acceder y pasar los archivos por ssh.
+
+```sh
+celiagm@debian:~/Descargas/drupal$ scp bootstrap-8.x-3.23.tar.gz vagrant@192.168.100.160:/home/vagrant
+bootstrap-8.x-3.23.tar.gz                                                                                                                                                        100%  250KB  20.7MB/s   00:00    
+celiagm@debian:~/Descargas/drupal$ scp clean_blog-3.0.0.tar.gz  vagrant@192.168.100.160:/home/vagrant
+clean_blog-3.0.0.tar.gz    
+```
+
+Ahora ya tenemos los temas en el servidor
+
+```sh
+root@debian-cms:/home/vagrant# ls
+bootstrap-8.x-3.23.tar.gz  clean_blog-3.0.0.tar.gz
+
+```
+
+Vamos a instalar los temas, para ello movemos los temas comprimidos a la carpeta themes y los descomprimimos ahí.
+
+```sh
+root@debian-cms:/var/www/celia-drupal/drupal-9.0.7/themes# tar -xzvf clean_blog-3.0.0.tar.gz
+
+root@debian-cms:/var/www/celia-drupal/drupal-9.0.7/themes# tar -xzvf tar -xzvf bootstrap-8.x-3.23.tar.gz 
+
+```
+
+```sh
+root@debian-cms:/var/www/celia-drupal/drupal-9.0.7/themes# ls
+bootstrap  clean_blog  README.txt
+
+```
+
+Reiniciamos el servidor de apache
+
+Actualizamos el navegador 
+
+Vemos que se han añadido y aparecen como desisntalados
+
+![drupal8.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal8.png)
+
+Los instalamos y ponemos como preterminado el base
+
+![drupal9.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/drupal9.png)
+
+
+Vemos que ha cambiado el tema correctamente
+
+![tema.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/tema.png)
+
+#### Crear contenido
+
+Vamos a la pestaña del menú superior **contenido** y despúes **añadir contenido**, seleccionamos **artículo** por ejemplo, y creamos el artículo
+
+![articulo.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/articulo.png)
+
+
+![articulo1.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/articulo1.png)
+
+
+#### Instalar un módulo
+
+Vamos a descarganos un módulo que se llama [Fivestar](https://www.drupal.org/project/fivestar)
+
+
+FIVESTAR (6.x-1.15): Este módulo permite insertar sistemas de valoración de contenidos de nuestra web, y depende de otro módulo denominado “Voting API”. Ambos son del tipo “Contributed Module” por lo que debermos localizarlos en la web de Drupal, descargarlos, instalarlos y activarlos del mismo modo que los demás “Contributed Modules”.
+
+![fiv1.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/fiv1.png)
+
+Copiamos la direccion de enlace de descarga del paquete comprimido.
+
+Vamos a 'Administracion' y después a 'ampliar' / 'extender'
+
+![extender.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/extender.png)
+
+Le damos a instalar un nuevo módulo, pegamos la dirección copiada antes y a 'instalar'
+
+![modulo.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/modulo.png)
+
+Vemos que se ha añadido correctamente y le damos a 'Activar los módulos agregados recientemente'
+
+![mod2.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/mod2.png)
+
+Nos dice que requiere una api
+
+![req.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/req.png)
+
+
+Pasamos a descargarla: [Voting API](https://www.drupal.org/project/votingapi)
+
+![votingapi.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/votingapi.png)
+
+
+Habilitamos los módulos instalados y le damos a 'instalar'
+
+![habilitar.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/habilitar.png)
+
+![correcto.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/correcto.png)
+
 
