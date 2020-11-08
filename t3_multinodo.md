@@ -137,33 +137,27 @@ lines 1-22/22 (END)
 
 ### 3. Crea un usuario en la base de datos para trabajar con la nueva base de datos.
 
-* Creamos el usuario nuevo
+* Creamos el usuario nuevo, podemos hacerlo manualmente pero vamos a utilizar un script para que sea más rápido el procedimiento:
 
 ```sh
-
-root@cliente:/home/vagrant# mysql -u root -p
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 49
-Server version: 10.3.25-MariaDB-0+deb10u1 Debian 10
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> create user 'cliente1'@'localhost';
-Query OK, 0 rows affected (0.001 sec)
-
-
+nano script.sh
 ```
 
-* Le damos permisos sobre la nueva base de datos
+El host tiene que ser '%' para que otros puedan acceder desde la red. Además le damos permisos suficientes sobre la nueva base de datos.
 
 ```sh
-MariaDB [(none)]> grant all privileges on cms_cliente.* to 'cliente1'@'localhost' identified by '********';
+#! /bin/bash
+newUser='user'
+newDbPassword='user'
+newDb='test'
+host='%'
+
+commands="CREATE DATABASE \`$newDb\`;CREATE USER '$newUser'@'$host' IDENTIFIED BY '$newDbPassword';GRANT USAGE ON *.*$
+TO '$newUser'@'$host';FLUSH PRIVILEGES;"
+
+echo "$commands" | /usr/bin/mysql -u root -p
+
 ```
-
-
 
 ### 4. Restaura la copia de seguridad en el nuevo servidor de base datos.
 
@@ -194,24 +188,25 @@ mysql -u usuario --pasword=contraseña_usuario nombrebd < backup.sql
 * Quedaría así:
 
 ```sh
-vagrant@cliente:~$ mysql -u cliente1 --password=cliente1 cms_cliente < db_backup_cms_20201107_121456.sql
+mysql -u user --password=user test < db_backup_cms_20201107_121456.sql
+
 ```
 
-* Entramos como cliente1 y comprobamos que se ha restaurado la copia de seguridad correctamente
+* Entramos como user y comprobamos que se ha restaurado la copia de seguridad correctamente
 
 ```sh
-vagrant@cliente:~$ mysql -u cliente1 -p
+vagrant@cliente:~$ mysql -u user -p
 ```
 
 ```sh
-MariaDB [(none)]> use cms_cliente
+MariaDB [(none)]> use test
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 Database changed
-MariaDB [cms_cliente]> show tables;
+MariaDB [test]> show tables;
 +-------------------------------------------------+
-| Tables_in_cms_cliente                           |
+| Tables_in_test                           |
 +-------------------------------------------------+
 | batch                                           |
 | block_content                                   |
@@ -359,9 +354,9 @@ La modificamos para que apunte a nuestro cliente donde está restaurada:
 
 ```sh
 $databases['default']['default'] = array (
-  'database' => 'cms_cliente',
-  'username' => 'cliente1',
-  'password' => 'cliente1',
+  'database' => 'test',
+  'username' => 'user',
+  'password' => 'user',
   'prefix' => '',
   'host' => '10.0.0.3',
   'port' => '3306',
@@ -369,10 +364,37 @@ $databases['default']['default'] = array (
   'driver' => 'mysql',
 );
 ```
+¡Importante! Tambien deberemos configurar la base de datos de mariadb en el cliente para que sea accesible desde otros nodos!!
 
-Guardamos la nueva configuración y reiniciamos el servicio de apache
+Para ello editamos el siguiente fichero y le damos un direccionamiento 0.0.0.0 para que sea accesible desde cualquier sitio:
+
+```sh
+root@cliente:/home/vagrant# nano /etc/mysql/mariadb.conf.d/50-server.cnf 
+```
+
+Buscamos la línea **bind-address** y cambiamos el direccionamiento tal y como vemos ahora:
+
+```sh
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 0.0.0.0
+```
+
+Reiniciamos el servicio de mariadb en el cliente.
+
+```sh
+systemctl restart mariadb
+```
+
+Reiniciamos el servicio de apache en el servidor.
 
 ```sh
 systemctl restart apache2
 ```
 
+Vemos que ha funcionado correctamente :)
+
+![funcionamiento_multinodo.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/funcionamiento_multinodo.png)
+
+
+![func.png](https://github.com/CeliaGMqrz/cms_install_debian/blob/main/capturas/func.png)
